@@ -1,0 +1,81 @@
+{
+  "info": {
+    "name": "Expense",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    { "name": "Health", "request": { "method": "GET", "url": "{{API}}/health" } },
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\"email\":\"user@test.com\",\"password\":\"Passw0rd!\"}" },
+        "url": "{{API}}/auth/login"
+      }
+    },
+    {
+      "name": "Me",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+        "url": "{{API}}/me"
+      }
+    },
+    {
+      "name": "Categories - list",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+        "url": "{{API}}/categories"
+      }
+    },
+    {
+      "name": "Categories - create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\"name\":\"Food\"}" },
+        "url": "{{API}}/categories"
+      }
+    },
+    {
+      "name": "Expenses - list",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+        "url": "{{API}}/expenses?from=&to=&sort=-occurred_at"
+      }
+    },
+    {
+      "name": "Expenses - create",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"amount\":120,\"categoryId\":\"<fill>\",\"occurred_at\":\"2025-10-01\",\"note\":\"Lunch\"}"
+        },
+        "url": "{{API}}/expenses"
+      }
+    },
+    {
+      "name": "Reports - summary",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+        "url": "{{API}}/reports/summary?from=&to="
+      }
+    }
+  ],
+  "variable": [
+    { "key": "API", "value": "http://localhost:5000" },
+    { "key": "TOKEN", "value": "" }
+  ]
+}

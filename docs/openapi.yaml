@@ -1,0 +1,52 @@
+openapi: 3.0.3
+info:
+  title: Expense Tracker API
+  version: 1.0.0
+servers:
+  - url: https://your-backend.example.com
+paths:
+  /health:
+    get: { summary: Health, responses: { '200': { description: OK } } }
+  /auth/login:
+    post:
+      summary: Login
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: { email: {type: string}, password: {type: string} }
+      responses: { '200': { description: Token issued } }
+  /me:
+    get: { summary: Current user, security: [ { bearerAuth: [] } ], responses: { '200': { description: OK } } }
+  /categories:
+    get: { summary: List categories, security: [ { bearerAuth: [] } ] }
+    post: { summary: Create category, security: [ { bearerAuth: [] } ] }
+  /categories/{id}:
+    delete: { summary: Delete category, security: [ { bearerAuth: [] } ] }
+  /expenses:
+    get:
+      summary: List expenses
+      security: [ { bearerAuth: [] } ]
+      parameters:
+        - in: query
+          name: from
+          schema: { type: string, format: date }
+        - in: query
+          name: to
+          schema: { type: string, format: date }
+        - in: query
+          name: sort
+          schema: { type: string }
+    post: { summary: Create expense, security: [ { bearerAuth: [] } ] }
+  /expenses/{id}:
+    delete: { summary: Delete expense, security: [ { bearerAuth: [] } ] }
+  /reports/summary:
+    get: { summary: Totals and breakdowns, security: [ { bearerAuth: [] } ] }
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
